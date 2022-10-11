@@ -26,7 +26,7 @@ const p = new DeepProxy(target, {
 // console.log(JSON.stringify(p.addresses));
 // console.log(JSON.stringify(p.detail.numbers));
 
-p; // Observers is not called
+p; // Observer is not called
 const { age } = p; // Observer is called
 p.name; // Observer is called
 p.addresses; // Observer is called

@@ -3,15 +3,10 @@ const { clone } = require(".");
 const now = require("performance-now");
 
 class Step {
-  constructor(context, audit) {
-    if (!context) throw new Error("context object is required!");
-    this.context = context;
-    this.audit = audit;
-  }
-
   async fn() {} // Should be overridden by child classes
 
-  async run() {
+  async run(context, audit) {
+    if (!context) throw new Error("context object is required!");
     const stepChangeHistory = [];
     const observer = (changes) => {
       changes.forEach((change) => {
@@ -19,16 +14,18 @@ class Step {
         stepChangeHistory.push(clone({ type, path, value, oldValue }));
       });
     };
-    Observable.observe(this.context, observer);
+    // TODO: Based on configuration enable audit capabilities
+    Observable.observe(context, observer);
     const start = now();
-    await this.fn(this.context);
+    await this.fn(context);
     const end = now();
-    Observable.unobserve(this.context, observer);
+    Observable.unobserve(context, observer);
 
-    this.audit.steps.push({
+    audit.steps.push({
       rule: this.constructor.name,
       fn: this.fn,
       contextChangesHistory: stepChangeHistory,
+      contextDiff: {}, // TODO: Implement
       timing: end - start,
     });
   }
