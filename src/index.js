@@ -1,7 +1,14 @@
 const { getContext } = require("./context");
 const { Rule1, Rule2, Rule3, Rule4, Rule5 } = require("./rules");
 
-const audit = { steps: [] };
+const audit = {
+  callStack: [],
+  config: {
+    trackTiming: true,
+    trackContextChangesHistory: true,
+    trackContextDiff: true,
+  },
+};
 const context = getContext();
 
 const r1 = new Rule1(); // Only should be instantiated once
@@ -17,4 +24,4 @@ r4.run(context, audit);
 r5.run(context, audit);
 
 console.dir(audit, { depth: null });
-// console.table(audit.steps[2].contextChangesHistory);
+// console.table(audit.callStack[2].contextChangesHistory);
