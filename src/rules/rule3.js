@@ -1,7 +1,7 @@
 const Step = require("../util/Step");
 
 class Rule3 extends Step {
-  async fn(context) {
+  fn(context) {
     Object.assign(context, {
       location: {
         country: "US",

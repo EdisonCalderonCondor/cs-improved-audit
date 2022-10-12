@@ -10,6 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "deep-diff": "^1.0.2",
     "object-observer": "^5.1.6",
     "performance-now": "^2.1.0",
     "proxy-deep": "^3.1.1"
